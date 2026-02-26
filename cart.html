@@ -1,0 +1,23 @@
+async function loadMenu() {
+    const response = await fetch("get_menu.php");
+    const items = await response.json();
+
+    const menuContainer = document.querySelector(".menu-items");
+    if (!menuContainer) return;
+
+    menuContainer.innerHTML = "";
+
+    items.forEach(item => {
+        menuContainer.innerHTML += `
+            <div class="item">
+                <h3>${item.name}</h3>
+                <p>${item.description}</p>
+                <p>Price: ₹${item.price} | Stock: ${item.stock}</p>
+                <input type="number" min="1" max="${item.stock}" value="1">
+                <button class="add-to-cart btn">Add to Cart</button>
+            </div>
+        `;
+    });
+}
+
+loadMenu();
